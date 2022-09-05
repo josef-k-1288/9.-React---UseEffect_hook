@@ -1,3 +1,15 @@
+/*
+  Korišćenjem useEffect hooka kažemo React-u da nasa komponenta mora nešto da uradi nakon renderovanja. 
+  React će zapamtiti funkciju koju ste preneli
+  i pozvati je kasnije nakon izvođenja ažuriranja DOM-a.
+
+  Po difoltu se pokrece posle svakog renderovanja, a ako to zelimo da sprecimo 
+  koristi se Dependencies array(prazan niz)
+  
+
+*/
+
+
 import Header from './Header';
 import SearchItem from './SearchItem';
 import AddItem from './AddItem';
@@ -22,7 +34,7 @@ function App() {
 
 
   useEffect(() => { 
-    localStorage.setItem('shoppinglist', JSON.stringify(items)); // cuva u lokalnoj memoriji
+    localStorage.setItem('shoppinglist', JSON.stringify(items)); // cuva u lokalnoj memoriji kada se setuju itemi i dodje do promene (sprecava da se na refresh strane izgubi item)
   },[items])  
   
   
@@ -39,7 +51,7 @@ const addItem = (item) => {
   const id = items.length ? items[items.length - 1].id + 1 : 1; // ako duzina unetig slova nije nula treba da bude 1?
   const myNewItem = { id, checked: false, item}; // ckecked polje dodatog itema ce uvek biti false
   const listItems = [...items, myNewItem]; // spread operator items nam omogućava da brzo kopiramo ceo ili deo postojećeg niza ili objekta u drugi niz ili objekat.
-  setItems(listItems);
+  setItems(listItems); // setuje item-e
 
 }
 
@@ -57,7 +69,7 @@ const handleDelete = (id) => {
   // console.log(id)
   const listItems = items.filter((item) => item.id !== id) // filter ce stvoriti novi niz i on ce imati samo id-ove koji nisu jednaki id-ju itema
   setItems(listItems);
-  localStorage.setItem('shoppinglist', JSON.stringify(listItems)); // cuva u lokalnoj memoriji
+  //localStorage.setItem('shoppinglist', JSON.stringify(listItems)); // cuva u lokalnoj memoriji
 }
 
 const handleSubmit = (e) => {
